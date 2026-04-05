@@ -1,5 +1,5 @@
 ---
-title: "Welcome to My Analytics Lab"
+title: "Welcome to my chaotic website"
 sidebar: false 
 ---
 
@@ -7,4 +7,4 @@ Hello! My name is Selin Atmaca.
 
 This is my personal webpage.
 
-Please stay tuned to follow my works on data analytics, blog posts, and more.
+I’ll put things I like here… if I don’t get lazy, so stay tuned.

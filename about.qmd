@@ -9,22 +9,22 @@ sidebar: false
 
 # Work Experience
 
-## Employements
-
-1.  Firm xxx, position xx, year xxx
-
-2.  Firm yyy, position yyy, year yyy
-
 ## Internships
 
-1.  Firm aaa, position xx, year xxx
-
-2.  Firm bbb, position yyy, year yyy
+1.  PTT Electronic Mail Department, Internship, 2025
 
 # Projects
+
+Forklift Operation Scheduling & Optimization Application, HIDROMEK
 
 # Competencies
 
 R, Quarto, Git, Python
 
 # Hobbies
+
+Starting any DIY project, watching movies, swimming, drinking coffee and chatting for 5 hours, sleeping, dumbscrooling...
+
+Literally anything not related to classes.**\
+\
+**
