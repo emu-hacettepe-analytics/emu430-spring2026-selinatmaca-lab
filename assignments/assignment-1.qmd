@@ -2,14 +2,30 @@
 title: "Assignment 1"
 ---
 
-# Assignment 1
-
-```{r}
-1 + 1
-```
-
-My first assignment has two parts.
-
 ## (a)
 
+The video I choose is Mustafa Baydoğan's one.
+
+**Summary**: Mustafa Baydoğan talks about some core ideas in data science and how they show up in real life. He explains how predictions models work, what affects their accuracy and how the results feed into actual decision making. He also talks about ranking algorithms at some point and shares his thoughts on whether humans are still needed in this field or not.
+
 ## (b)
+
+## Question 1:
+
+What is the main purpose of subtracting k\*view count from the recommended ranking score in a dynamic scoring policy?
+
+**Answer:** This formula reduces the score of product that have been seen too many times so the same items do not always show up at the top. This way, products that have been viewed less get a chance to appear which leads to a more varied and balanced set of recommendations.
+
+## Question 2:
+
+What is the term used to describe the pattern where data consumption varies depending on the time of day such as being higher in the evening and lower at night?
+
+A\) Trend
+
+**B) Seasonality**
+
+C\) Noise
+
+D\) Outlier
+
+E\) Stationarity
