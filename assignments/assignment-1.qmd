@@ -29,3 +29,50 @@ C\) Noise
 D\) Outlier
 
 E\) Stationarity
+
+## Task 4
+
+```{r}
+
+
+my_first <- "Selin"
+my_birth_year <- 2003
+
+library(dslabs)
+data <- polls_us_election_2016
+
+k <- (nchar(my_first) + my_birth_year) %% 15 + 8
+cat("k =", k, "\n")
+
+if (k %% 2 == 0) print(head(data, k)) else print(tail(data, k))
+
+
+cat("Total number of NA values:", sum(is.na(data)), "\n")
+
+print(head(sort(colSums(is.na(data)), decreasing = TRUE), 8))
+
+
+
+new_data <- data
+for (col in names(new_data)) {
+  if (is.numeric(new_data[[col]])) {
+    new_data[[col]][is.na(new_data[[col]])] <- my_birth_year + k
+  } else if (is.factor(new_data[[col]])) {
+    levels(new_data[[col]]) <- c(levels(new_data[[col]]), paste0(my_first, "_", k))
+    new_data[[col]][is.na(new_data[[col]])] <- paste0(my_first, "_", k)
+  } else if (is.character(new_data[[col]])) {
+    new_data[[col]][is.na(new_data[[col]])] <- paste0(my_first, "_", k)
+  }
+}
+
+
+if (k %% 2 == 0) print(head(new_data, k)) else print(tail(new_data, k))
+
+
+cat("Total NA values in new data:", sum(is.na(new_data)), "\n")
+
+cat("anyNA(new_data):", anyNA(new_data), "\n")
+
+#I use claude ai for this task.
+
+```

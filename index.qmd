@@ -8,3 +8,5 @@ Hello! My name is Selin Atmaca.
 This is my personal webpage.
 
 I’ll put things I like here… if I don’t get lazy, so stay tuned.
+
+![](resim.jpg){width="400"}
