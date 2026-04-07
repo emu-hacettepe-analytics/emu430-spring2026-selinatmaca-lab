@@ -374,11 +374,15 @@ ul.task-list li input[type="checkbox"] {
       <input id="player-name" placeholder="Enter your name to save score" maxlength="20">
       <button onclick="saveScore()">Save</button>
     </div>
-    <ul id="lb-list"></ul>
+    <ul id="lb-list"><li style="font-size:13px;color:#d4537e;padding:6px">Loading leaderboard...</li></ul>
   </div>
 </div>
 
 <script>
+const BIN_ID='69d4e8e3aaba882197d1bc8f';
+const API_KEY='$2a$10$dgmp9aT06xyTnrJhC0GocOqkwzDJYTyTkvcxUUSEei3i56qzq.uWm';
+const BIN_URL='https://api.jsonbin.io/v3/b/'+BIN_ID;
+
 const canvas=document.getElementById('canvas');
 const ctx=canvas.getContext('2d');
 const W=canvas.width,H=canvas.height,GROUND=H-24;
@@ -445,9 +449,7 @@ function drawPrincess(x,y,w,h,dead,lf){
   if(!dead){
     let ao=Math.sin(lf*.32+1)*3;
     ctx.fillRect(x-4,y+h*.3+ao,5,13);ctx.fillRect(x+w-1,y+h*.3-ao,5,13);
-  } else {
-    ctx.fillRect(x-5,y+h*.36,6,11);ctx.fillRect(x+w-1,y+h*.28,6,11);
-  }
+  }else{ctx.fillRect(x-5,y+h*.36,6,11);ctx.fillRect(x+w-1,y+h*.28,6,11);}
   ctx.fillStyle='#f9d4e0';ctx.fillRect(cx-4,y+h*.22,8,h*.09);
   ctx.beginPath();ctx.ellipse(cx,y+h*.13,10.5,11.5,0,0,Math.PI*2);ctx.fill();
   ctx.fillStyle='#c2507a';
@@ -461,7 +463,7 @@ function drawPrincess(x,y,w,h,dead,lf){
     ctx.strokeStyle='#993356';ctx.lineWidth=1.5;
     ctx.beginPath();ctx.moveTo(cx-5,y+h*.1);ctx.lineTo(cx-3,y+h*.14);ctx.moveTo(cx-3,y+h*.1);ctx.lineTo(cx-5,y+h*.14);ctx.stroke();
     ctx.beginPath();ctx.moveTo(cx+3,y+h*.1);ctx.lineTo(cx+5,y+h*.14);ctx.moveTo(cx+5,y+h*.1);ctx.lineTo(cx+3,y+h*.14);ctx.stroke();
-  } else {
+  }else{
     ctx.fillStyle='#993356';ctx.beginPath();ctx.arc(cx-4,y+h*.12,2.2,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(cx+4,y+h*.12,2.2,0,Math.PI*2);ctx.fill();
     ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx-3,y+h*.11,.9,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(cx+5,y+h*.11,.9,0,Math.PI*2);ctx.fill();
     ctx.strokeStyle='#993356';ctx.lineWidth=1;ctx.beginPath();ctx.arc(cx,y+h*.16,3,.1,Math.PI-.1);ctx.stroke();
@@ -502,8 +504,13 @@ function draw(){
 
 function endGame(){
   dino.dead=true;running=false;draw();
-  if(score>best){best=score;localStorage.setItem('princessBest2',best);document.getElementById('best-disp').textContent=best;document.getElementById('msg').textContent='New High Score! 🎉 '+score;}
-  else document.getElementById('msg').textContent='Game Over! Score: '+score;
+  if(score>best){
+    best=score;localStorage.setItem('princessBest2',best);
+    document.getElementById('best-disp').textContent=best;
+    document.getElementById('msg').textContent='New High Score! 🎉 '+score;
+  }else{
+    document.getElementById('msg').textContent='Game Over! Score: '+score;
+  }
   document.getElementById('start-btn').style.display='inline-block';
   document.getElementById('start-btn').textContent='▶ Play Again';
 }
@@ -516,37 +523,55 @@ canvas.addEventListener('click',()=>{if(!running)startGame();else jump();});
 canvas.addEventListener('touchstart',e=>{e.preventDefault();if(!running)startGame();else jump();},{passive:false});
 draw();
 
-function loadLeaderboard(){
+async function fetchScores(){
+  const r=await fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY}});
+  const d=await r.json();
+  return d.record.scores||[];
+}
+
+async function pushScores(scores){
+  await fetch(BIN_URL,{
+    method:'PUT',
+    headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},
+    body:JSON.stringify({scores})
+  });
+}
+
+async function loadLeaderboard(){
+  const ul=document.getElementById('lb-list');
   try{
-    const raw=localStorage.getItem('princessLB2');
-    const entries=raw?JSON.parse(raw):[];
+    const entries=await fetchScores();
     entries.sort((a,b)=>b.score-a.score);
     const top=entries.slice(0,10);
-    const ul=document.getElementById('lb-list');
     if(!top.length){ul.innerHTML='<li style="font-size:13px;color:#d4537e;padding:6px">No scores yet — be the first! 👑</li>';return;}
     const medals=['👑','✨','🌸'];
     ul.innerHTML=top.map((e,i)=>`<li class="lb-row"><span class="lb-rank">${medals[i]||i+1+'.'}</span><span class="lb-name">${e.name}</span><span class="lb-score">${e.score}</span></li>`).join('');
   }catch(err){
-    document.getElementById('lb-list').innerHTML='<li style="font-size:13px;color:#d4537e">Could not load leaderboard</li>';
+    ul.innerHTML='<li style="font-size:13px;color:#d4537e;padding:6px">Could not load leaderboard</li>';
   }
 }
 
-function saveScore(){
+async function saveScore(){
   const name=document.getElementById('player-name').value.trim();
   if(!name){document.getElementById('msg').textContent='Please enter your name first!';return;}
   const s=score||best;
   if(!s){document.getElementById('msg').textContent='Play first to save a score!';return;}
+  document.getElementById('msg').textContent='Saving...';
   try{
-    const raw=localStorage.getItem('princessLB2');
-    let entries=raw?JSON.parse(raw):[];
+    let entries=await fetchScores();
     const idx=entries.findIndex(e=>e.name.toLowerCase()===name.toLowerCase());
     if(idx>=0){if(s>entries[idx].score)entries[idx].score=s;}
     else entries.push({name,score:s});
-    localStorage.setItem('princessLB2',JSON.stringify(entries));
-    loadLeaderboard();
+    entries.sort((a,b)=>b.score-a.score);
+    entries=entries.slice(0,10);
+    await pushScores(entries);
+    await loadLeaderboard();
     document.getElementById('msg').textContent='Saved! Good luck next time 👑';
-  }catch(e){document.getElementById('msg').textContent='Could not save. Try again!';}
+  }catch(e){
+    document.getElementById('msg').textContent='Could not save. Try again!';
+  }
 }
+
 loadLeaderboard();
 </script>
 <p><img src="gif.gif" class="img-fluid" width="400"></p>
