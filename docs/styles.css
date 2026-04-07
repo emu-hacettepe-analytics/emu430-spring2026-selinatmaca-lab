@@ -1,1 +1,100 @@
 /* css styles */
+/* ── Google Font ───────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@500;700&display=swap');
+
+/* ── Global font ───────────────────────────────────────── */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff5f6;
+}
+
+h1, h2, h3, h4, .navbar-brand {
+  font-family: 'Playfair Display', serif;
+}
+
+/* ── Navbar ────────────────────────────────────────────── */
+.navbar {
+  background: linear-gradient(135deg, #e8aeb4, #d98c95) !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+
+.navbar .nav-link,
+.navbar-brand {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+.navbar .nav-link:hover {
+  color: #ffe4e6 !important;
+}
+
+/* ── Hero Section ──────────────────────────────────────── */
+.hero-section h1 {
+  color: #c06c75;
+}
+
+.hero-section .subtitle {
+  color: #8b5e63;
+}
+
+/* ── Badge Row ─────────────────────────────────────────── */
+.badge-item {
+  background: linear-gradient(135deg, #e8aeb4, #d98c95);
+  box-shadow: 0 2px 8px rgba(217,140,149,0.4);
+}
+
+/* ── Cards ─────────────────────────────────────────────── */
+.info-card {
+  background: #ffffff;
+  border-left: 4px solid #d98c95;
+}
+
+.info-card:hover {
+  box-shadow: 0 12px 30px rgba(217,140,149,0.25);
+}
+
+.info-card h3 {
+  color: #c06c75;
+}
+
+.info-card p {
+  color: #7a5c61;
+}
+
+/* ── Background dots ───────────────────────────────────── */
+.dot {
+  background: rgba(217, 140, 149, 0.2);
+}
+
+/* ── Typing effect ─────────────────────────────────────── */
+.typing-text::after {
+  color: #c06c75;
+}
+
+/* ── Footer ───────────────────────────────────────────── */
+.nav-footer {
+  background: #d98c95 !important;
+  color: #fff1f2 !important;
+}
+
+/* ── Headings ─────────────────────────────────────────── */
+h2 {
+  border-bottom: 2px solid #d98c95;
+}
+
+/* ── Links ────────────────────────────────────────────── */
+a {
+  color: #c06c75;
+}
+a:hover {
+  color: #a6525c;
+}
+
+/* ── Dark mode ────────────────────────────────────────── */
+[data-bs-theme="dark"] .info-card {
+  background: #2a1f22;
+}
+
+[data-bs-theme="dark"] .info-card p {
+  color: #d4a5aa;
+}

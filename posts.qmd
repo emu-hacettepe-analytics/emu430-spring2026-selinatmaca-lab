@@ -6,3 +6,5 @@ sidebar: false
 This page is under construction.
 
 ![](resim1.jpg){width="400"}
+
+![](resim2.jpg){width="400"}
