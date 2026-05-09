@@ -41,15 +41,14 @@ website:
   page-footer:
     center: "Hacettepe IE - EMU430 - 2026 Spring" 
     border: true
+
 format:
   html:
     toc: true
     toc-location: left
-    theme: 
-      light: pulse 
-      dark: superhero
-    css: styles.css
-
+    theme:
+      light: [pulse, styles.css]
+      dark: [superhero, styles.css]
 
 editor: visual
 

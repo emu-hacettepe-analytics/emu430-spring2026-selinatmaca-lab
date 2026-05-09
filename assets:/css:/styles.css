@@ -15,17 +15,15 @@ h1, h2, h3, h4, .navbar-brand {
 /* ── Navbar ────────────────────────────────────────────── */
 .navbar {
   background: linear-gradient(135deg, #e8aeb4, #d98c95) !important;
+  background-color: #d98c95 !important;
   box-shadow: 0 2px 12px rgba(0,0,0,0.15);
 }
 
-.navbar .nav-link,
-.navbar-brand {
-  color: #ffffff !important;
-  font-weight: 600;
-}
-
-.navbar .nav-link:hover {
-  color: #ffe4e6 !important;
+.navbar-default,
+.navbar-expand-lg,
+[data-bs-theme="light"] .navbar {
+  background: linear-gradient(135deg, #e8aeb4, #d98c95) !important;
+  background-color: #d98c95 !important;
 }
 
 /* ── Hero Section ──────────────────────────────────────── */
